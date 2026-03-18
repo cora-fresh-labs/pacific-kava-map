@@ -11,6 +11,19 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "tactical-green": {
+          DEFAULT: "#39ff14",
+          dim: "#1d720b",
+        },
+        "tactical-amber": {
+          DEFAULT: "#ffb000",
+        },
+        "tactical-red": {
+          DEFAULT: "#ff3333",
+        },
+        "tactical-cyan": {
+          DEFAULT: "#0ff",
+        },
       },
     },
   },

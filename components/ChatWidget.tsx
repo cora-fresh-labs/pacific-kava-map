@@ -21,7 +21,7 @@ export default function ChatWidget() {
     {
       role: "assistant",
       content:
-        "Bula! I'm your kava guide. Ask me anything about kava varieties, Pacific culture, health effects, regulations, or the global market. 🌿",
+        "SYSTEM ONLINE. KAVA INTELLIGENCE DATABASE ACTIVE. QUERY VARIETALS, PACIFIC CULTURE, HEALTH PROFILES, REGULATIONS, OR GLOBAL MARKET DATA.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -57,7 +57,7 @@ export default function ChatWidget() {
         ...prev,
         {
           role: "assistant",
-          content: data.message || "Sorry, I couldn't get a response. Please try again.",
+          content: data.message || "ERR: UPLINK TIMEOUT. RETRY QUERY.",
         },
       ]);
     } catch {
@@ -65,7 +65,7 @@ export default function ChatWidget() {
         ...prev,
         {
           role: "assistant",
-          content: "Connection error. Please try again.",
+          content: "ERR: CONNECTION LOST. RETRY TRANSMISSION.",
         },
       ]);
     } finally {
@@ -78,51 +78,55 @@ export default function ChatWidget() {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-[2000] bg-teal-600 hover:bg-teal-500 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg transition-all hover:scale-110"
-        title="Ask Kava"
+        className="fixed bottom-6 right-6 z-[2500] bg-[#001100] border-2 border-tactical-green hover:border-tactical-cyan text-tactical-green hover:text-tactical-cyan w-14 h-14 flex items-center justify-center shadow-[0_0_20px_rgba(57,255,20,0.3)] hover:shadow-[0_0_25px_rgba(0,255,255,0.4)] transition-all font-mono text-xs uppercase"
+        title="Ask Kava Intel"
       >
-        {isOpen ? (
-          <span className="text-xl">✕</span>
-        ) : (
-          <span className="text-2xl">🌿</span>
-        )}
+        {isOpen ? "[X]" : "[?]"}
       </button>
 
       {/* Chat Panel */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-[2000] w-80 sm:w-96 bg-gray-900 border border-teal-800 rounded-xl shadow-2xl flex flex-col overflow-hidden"
-          style={{ height: "480px" }}>
+        <div
+          className="fixed bottom-24 right-6 z-[2500] w-80 sm:w-96 bg-[#000a00] border-2 border-tactical-green shadow-[0_0_30px_rgba(57,255,20,0.2)] flex flex-col overflow-hidden font-mono animate-scale-in"
+          style={{ height: "480px" }}
+        >
           {/* Header */}
-          <div className="bg-teal-900 px-4 py-3 flex items-center gap-2">
-            <span className="text-xl">🌿</span>
-            <div>
-              <div className="text-white font-semibold text-sm">Ask Kava</div>
-              <div className="text-teal-300 text-xs">Powered by AI</div>
+          <div className="bg-[#001500] px-4 py-3 flex items-center justify-between border-b border-tactical-green-dim">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 bg-tactical-green rounded-full animate-pulse shadow-[0_0_8px_rgba(57,255,20,0.8)]" />
+              <div>
+                <div className="text-tactical-green font-bold text-xs uppercase tracking-widest">KAVA_INTEL</div>
+                <div className="text-tactical-green-dim text-[9px] uppercase tracking-wider">AI UPLINK ACTIVE</div>
+              </div>
             </div>
+            <span className="text-[8px] text-tactical-amber border border-tactical-amber px-1 animate-pulse">[LIVE]</span>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-3 space-y-3">
+          <div className="flex-1 overflow-y-auto p-3 space-y-3 bg-[#000800]">
             {messages.map((msg, i) => (
               <div
                 key={i}
                 className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed ${
+                  className={`max-w-[85%] px-3 py-2 text-[11px] leading-relaxed ${
                     msg.role === "user"
-                      ? "bg-teal-700 text-white"
-                      : "bg-gray-800 text-gray-200 border border-gray-700"
+                      ? "bg-tactical-green/10 text-tactical-green border border-tactical-green/50"
+                      : "bg-[#001100] text-tactical-green/80 border border-tactical-green-dim"
                   }`}
                 >
+                  {msg.role === "assistant" && (
+                    <span className="text-tactical-cyan text-[9px] block mb-1">&gt; SYS_REPLY:</span>
+                  )}
                   {msg.content}
                 </div>
               </div>
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-gray-800 rounded-lg px-3 py-2 text-sm text-gray-400 border border-gray-700">
-                  <span className="animate-pulse">Thinking...</span>
+                <div className="bg-[#001100] px-3 py-2 text-[11px] text-tactical-green-dim border border-tactical-green-dim">
+                  <span className="animate-pulse">PROCESSING QUERY...</span>
                 </div>
               </div>
             )}
@@ -131,16 +135,16 @@ export default function ChatWidget() {
 
           {/* Suggested Questions */}
           {messages.length === 1 && (
-            <div className="px-3 pb-2">
-              <div className="text-xs text-gray-500 mb-2">Try asking:</div>
+            <div className="px-3 pb-2 bg-[#000800] border-t border-tactical-green-dim/30">
+              <div className="text-[9px] text-tactical-green-dim mb-2 uppercase tracking-wider">&gt; SUGGESTED_QUERIES:</div>
               <div className="flex flex-wrap gap-1">
                 {SUGGESTED_QUESTIONS.slice(0, 3).map((q) => (
                   <button
                     key={q}
                     onClick={() => sendMessage(q)}
-                    className="text-xs bg-gray-800 hover:bg-gray-700 text-teal-400 rounded-full px-2 py-1 border border-gray-700 hover:border-teal-700 transition-all"
+                    className="text-[10px] bg-[#001100] hover:bg-tactical-green-dim/30 text-tactical-green px-2 py-1 border border-tactical-green-dim hover:border-tactical-green transition-all uppercase"
                   >
-                    {q.length > 30 ? q.slice(0, 28) + "..." : q}
+                    {q.length > 28 ? q.slice(0, 26) + "..." : q}
                   </button>
                 ))}
               </div>
@@ -148,22 +152,22 @@ export default function ChatWidget() {
           )}
 
           {/* Input */}
-          <div className="p-3 border-t border-gray-700">
+          <div className="p-3 border-t border-tactical-green-dim bg-[#001100]">
             <div className="flex gap-2">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-                placeholder="Ask about kava..."
-                className="flex-1 bg-gray-800 text-gray-200 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:border-teal-500 focus:outline-none placeholder-gray-500"
+                placeholder="ENTER QUERY..."
+                className="flex-1 bg-[#000a00] text-tactical-green border border-tactical-green-dim px-3 py-2 text-[11px] focus:border-tactical-cyan focus:outline-none placeholder-tactical-green-dim/40 uppercase"
               />
               <button
                 onClick={() => sendMessage(input)}
                 disabled={isLoading || !input.trim()}
-                className="bg-teal-600 hover:bg-teal-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg px-3 py-2 text-sm transition-colors"
+                className="bg-tactical-green hover:bg-tactical-cyan disabled:opacity-30 disabled:cursor-not-allowed text-black px-3 py-2 text-xs transition-colors font-bold uppercase"
               >
-                ↑
+                TX
               </button>
             </div>
           </div>

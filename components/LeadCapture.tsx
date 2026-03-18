@@ -31,82 +31,91 @@ export default function LeadCapture({ onClose }: { onClose: () => void }) {
 
   if (status === "success") {
     return (
-      <div className="text-center py-4">
-        <div className="text-4xl mb-3">🌿</div>
-        <h3 className="text-xl font-bold text-white mb-2">You&apos;re in!</h3>
-        <p className="text-gray-300 text-sm mb-4">
-          The Pacific Kava Market Report is on its way to your inbox.
+      <div className="text-center py-4 font-mono">
+        <div className="text-tactical-green text-3xl mb-3">[OK]</div>
+        <h3 className="text-xl font-bold text-tactical-green mb-2 uppercase tracking-widest">UPLINK ESTABLISHED</h3>
+        <p className="text-tactical-green/70 text-xs mb-4 uppercase tracking-wider">
+          INTEL PACKAGE EN ROUTE TO YOUR INBOX. STAND BY.
         </p>
         <button
           onClick={onClose}
-          className="bg-teal-600 hover:bg-teal-500 text-white px-6 py-2 rounded-lg text-sm transition-colors"
+          className="bg-transparent border border-tactical-green text-tactical-green hover:bg-tactical-green hover:text-black px-6 py-2 text-xs transition-all font-mono uppercase tracking-widest"
         >
-          Back to the map
+          [ RETURN TO MAP ]
         </button>
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="font-mono">
       <button
         onClick={onClose}
-        className="absolute top-3 right-3 text-gray-400 hover:text-white"
+        className="absolute top-2 right-2 text-tactical-green-dim hover:text-tactical-amber transition-colors p-1 text-xs"
       >
-        ✕
+        [X]
       </button>
       <div className="flex items-center gap-2 mb-1">
-        <span className="text-2xl">📊</span>
-        <h3 className="text-xl font-bold text-white">Pacific Kava Market Report</h3>
+        <span className="text-tactical-amber text-sm animate-pulse">[!]</span>
+        <h3 className="text-base font-bold text-tactical-amber uppercase tracking-widest">CLASSIFIED INTEL</h3>
       </div>
-      <p className="text-gray-400 text-sm mb-4">
-        Free report: $130M market analysis, export opportunities, variety guide, and trade flow data.
+      <p className="text-tactical-green/60 text-[10px] mb-4 uppercase tracking-wider">
+        DECRYPT: $130M MARKET ANALYSIS // EXPORT OPS // VARIETAL GUIDE // TRADE FLOW DATA
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-3">
-        <input
-          type="text"
-          placeholder="Your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          className="w-full bg-gray-800 text-gray-200 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:border-teal-500 focus:outline-none placeholder-gray-500"
-        />
-        <input
-          type="email"
-          placeholder="Your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full bg-gray-800 text-gray-200 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:border-teal-500 focus:outline-none placeholder-gray-500"
-        />
-        <select
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          className="w-full bg-gray-800 text-gray-200 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:border-teal-500 focus:outline-none"
-        >
-          <option value="buyer">I am a: Buyer</option>
-          <option value="grower">I am a: Grower</option>
-          <option value="investor">I am a: Investor</option>
-          <option value="researcher">I am a: Researcher</option>
-        </select>
+        <div>
+          <label className="text-[9px] text-tactical-green-dim uppercase tracking-widest block mb-1">CALLSIGN</label>
+          <input
+            type="text"
+            placeholder="Enter name..."
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="w-full bg-[#001100] text-tactical-green border border-tactical-green-dim px-3 py-2 text-xs focus:border-tactical-cyan focus:outline-none placeholder-tactical-green-dim/50 font-mono uppercase"
+          />
+        </div>
+        <div>
+          <label className="text-[9px] text-tactical-green-dim uppercase tracking-widest block mb-1">SECURE_CHANNEL</label>
+          <input
+            type="email"
+            placeholder="Enter email..."
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full bg-[#001100] text-tactical-green border border-tactical-green-dim px-3 py-2 text-xs focus:border-tactical-cyan focus:outline-none placeholder-tactical-green-dim/50 font-mono uppercase"
+          />
+        </div>
+        <div>
+          <label className="text-[9px] text-tactical-green-dim uppercase tracking-widest block mb-1">ROLE_CLASS</label>
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="w-full bg-[#001100] text-tactical-green border border-tactical-green-dim px-3 py-2 text-xs focus:border-tactical-cyan focus:outline-none font-mono uppercase"
+          >
+            <option value="buyer">[ BUYER ]</option>
+            <option value="grower">[ GROWER ]</option>
+            <option value="investor">[ INVESTOR ]</option>
+            <option value="researcher">[ RESEARCHER ]</option>
+          </select>
+        </div>
         <button
           type="submit"
           disabled={status === "loading"}
-          className="w-full bg-teal-600 hover:bg-teal-500 disabled:opacity-50 text-white rounded-lg py-2.5 text-sm font-semibold transition-colors"
+          className="w-full bg-tactical-amber hover:bg-tactical-amber/80 disabled:opacity-50 text-black py-2.5 text-xs font-bold transition-colors font-mono uppercase tracking-widest shadow-[0_0_15px_rgba(255,176,0,0.3)]"
         >
-          {status === "loading" ? "Sending..." : "Get Free Report →"}
+          {status === "loading" ? "DECRYPTING..." : "[ INITIATE DECRYPT ]"}
         </button>
       </form>
 
       {status === "error" && (
-        <p className="text-red-400 text-xs mt-2 text-center">
-          Something went wrong. Please try again.
+        <p className="text-tactical-red text-[10px] mt-2 text-center uppercase tracking-wider animate-pulse">
+          [ERR] UPLINK FAILED. RETRY TRANSMISSION.
         </p>
       )}
 
-      <p className="text-gray-500 text-xs text-center mt-3">
-        No spam. Unsubscribe anytime.
+      <p className="text-tactical-green-dim/50 text-[9px] text-center mt-3 uppercase tracking-wider">
+        NO SPAM. UNSUBSCRIBE ANYTIME. SEC_LEVEL: STANDARD.
       </p>
     </div>
   );
