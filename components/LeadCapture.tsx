@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function LeadCapture({ onClose }: { onClose: () => void }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("curious");
+  const [role, setRole] = useState("researcher");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -88,7 +88,7 @@ export default function LeadCapture({ onClose }: { onClose: () => void }) {
           <option value="buyer">I am a: Buyer</option>
           <option value="grower">I am a: Grower</option>
           <option value="investor">I am a: Investor</option>
-          <option value="curious">I am a: Curious</option>
+          <option value="researcher">I am a: Researcher</option>
         </select>
         <button
           type="submit"
