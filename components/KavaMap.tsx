@@ -418,6 +418,19 @@ export default function KavaMap({ onCountrySelect, selectedCountry }: KavaMapPro
     }
     globe.add(coralMesh);
 
+    // --- User interaction tracking (pause auto-rotate while user controls globe) ---
+    let userInteracting = false;
+    let lastInteractionTime = 0;
+    const AUTO_ROTATE_RESUME_DELAY = 3; // seconds of idle before auto-rotate resumes
+
+    controls.addEventListener("start", () => {
+      userInteracting = true;
+    });
+    controls.addEventListener("end", () => {
+      userInteracting = false;
+      lastInteractionTime = performance.now() * 0.001;
+    });
+
     // --- Camera fly-to state ---
     let flyTo = {
       active: false,
@@ -477,9 +490,12 @@ export default function KavaMap({ onCountrySelect, selectedCountry }: KavaMapPro
         }
       }
 
-      // --- Smooth auto-rotation (only when idle) ---
-      if (!flyTo.active && !sel) {
-        globe.rotation.y += 0.0006;
+      // --- Smooth auto-rotation (only when idle + user not interacting) ---
+      const idleTime = t - lastInteractionTime;
+      if (!flyTo.active && !sel && !userInteracting && idleTime > AUTO_ROTATE_RESUME_DELAY) {
+        // Ease back into rotation smoothly
+        const easeIn = Math.min(1, (idleTime - AUTO_ROTATE_RESUME_DELAY) / 2);
+        globe.rotation.y += 0.0006 * easeIn;
       }
 
       // --- Compute camera position in globe local space (for billboard) ---
